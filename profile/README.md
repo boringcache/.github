@@ -5,23 +5,26 @@
 ██║     ╚██████╔╝██║     ██║██║ ╚████║╚██████╔╝╚██████╗██║  ██║╚██████╗██║  ██║███████╗
 ╚═╝      ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
 
-💤 BoringCache – Cache like it’s nobody’s business. Fast. Predictable. Unimpressed.
+# Boringcache
+
+**A universal, portable build cache.**  
+Cache once, reuse anywhere — CI, deploy, or your laptop.  
+
+boringcache is a distributed cache platform with:  
+- A **Rust CLI** for saving/restoring cache  
+- A **Rails backend** with workspaces (private or public)  
+- **S3-compatible storage** powered by [Tigris Data](https://www.tigrisdata.com/)  
+
+Think Docker layers, but for build artifacts.  
+
+👉 [Website](https://boringcache.com) · [Docs](https://boringcache.com/docs)
 
 ---
 
-## 💡 What Is BoringCache?
+## ✨ Features
 
-**BoringCache** is a minimal, transparent caching system for slow CI toolchains (like Ruby and Node.js).  
-It doesn’t try to be smart — it **pulls** and **pushes** only what you tell it to, with compression, reproducibility, and platform awareness.
-
-- Works with [mise](https://mise.jdx.dev) for version installs
-- Uses `.tar.zst` archives for fast, compact transfers
-- Targets **global cache** and **user/project-level push**
-- No black-box magic or fragile detection — just solid, boring cache mechanics
-
----
-
-## ✨ Key Features
-
-- ✅ Manual `cache pull/push` CLI
-- 🧠 Global platform-aware namespace:
+- **Portable** — works in *any environment*: CI/CD, local dev, deployment pipelines  
+- **Fast** — caches only compatible layers, restores instantly  
+- **Reusable** — share cache across machines and workspaces  
+- **Simple** — one CLI, one cache format, everywhere  
+- **Transparent** — you control retention, visibility (private/public)  
