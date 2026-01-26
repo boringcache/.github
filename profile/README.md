@@ -1,16 +1,35 @@
-# Boringcache
+# BoringCache
 
-**A universal, portable build cache.**  
-Cache once, reuse anywhere — CI, deploy, or your laptop.  
+> Universal build cache for CI, Docker, and local development.
 
-👉 [Website](https://boringcache.com) · [Docs](https://boringcache.com/docs)
+**BoringCache speeds up builds by caching expensive parts—dependencies, toolchains, and build outputs—and reusing them across environments.**
 
----
+If something was already built, installed, or downloaded, BoringCache helps you avoid doing it again.
 
-## ✨ Features
+## What it’s good at
 
-- **Portable** — works in *any environment*: CI/CD, local dev, deployment pipelines  
-- **Fast** — caches only compatible layers, restores instantly  
-- **Reusable** — share cache across machines and workspaces  
-- **Simple** — one CLI, one cache format, everywhere  
-- **Transparent** — you control retention, visibility (private/public)  
+- Speeding up CI pipelines
+- Persisting Docker BuildKit caches
+- Sharing caches between CI and developer machines
+- Speeding up custom build steps
+
+## How it works
+
+1. You choose directories to cache
+2. A content manifest is built
+3. Identical content uploads once
+4. Verified archives are restored where needed
+
+The same cache works in CI, Docker, and local development.
+
+## Repositories
+
+- `cli` — Universal CLI
+- `action` — GitHub Actions integration
+- `nodejs`, `ruby`, `rust` — Language setup + caching
+- `docker`, `buildkit` — Docker BuildKit cache reuse
+
+## Learn more
+
+- Docs: https://boringcache.com/docs
+- Website: https://boringcache.com
