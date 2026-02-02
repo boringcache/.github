@@ -1,8 +1,14 @@
 # BoringCache
 
+Hey 👋 We're BoringCache.
+
+We believe builds shouldn't repeat work that's already done. So we made a cache that's delightfully boring — no daemons, no magic, no surprises. Just directories in, directories out.
+
 **Cache once. Reuse everywhere.**
 
-BoringCache is a **universal build artifact cache for CI, Docker, and local development**.  
+---
+
+BoringCache is a **universal build artifact cache for CI, Docker, and local development**.
 It stores and restores directories you choose so build outputs, dependencies, and tool caches can be reused across environments.
 
 BoringCache **does not run builds** and is **not tied to any build tool**. It works with any language, framework, or workflow by caching directories explicitly selected by the user.
