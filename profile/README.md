@@ -100,7 +100,7 @@ You can use the CLI directly or via GitHub Actions wrappers.
 
 All actions use the same cache format and underlying CLI.
 
-Where it works
+## Where it works
 - GitHub Actions
 - GitLab CI
 - CircleCI
@@ -112,21 +112,21 @@ Where it works
 
 Any CI. Any build system. Just point at directories.
 
-What BoringCache is not
+## What BoringCache is not
 - ❌ Not a build system
 - ❌ Not a workflow engine
 - ❌ Not a compiler-specific cache
 
 BoringCache only saves and restores directories you explicitly choose.
 
-Documentation
+## Documentation
 
 - 📖 Docs: https://boringcache.com/docs
 - 🌐 Website: https://boringcache.com
 
 🧠 GitHub Actions Marketplace: https://github.com/marketplace/actions/boringcache
 
-License
+## License
 
 MIT
 
