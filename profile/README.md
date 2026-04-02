@@ -64,19 +64,20 @@ Same commands. Same cache. Anywhere you build.
 ```
 
 ## GitHub Actions
-BoringCache provides a drop-in replacement for actions/cache:
+The maintained GitHub Actions surface is `boringcache/one@v1`:
 
 ```yaml
-- uses: boringcache/action@v1
+- uses: boringcache/one@v1
   with:
+    preset: node
     workspace: my-org/app
-    entries: deps:node_modules,build:dist
   env:
-    BORINGCACHE_API_TOKEN: ${{ secrets.BORINGCACHE_API_TOKEN }}
+    BORINGCACHE_RESTORE_TOKEN: ${{ secrets.BORINGCACHE_RESTORE_TOKEN }}
+    BORINGCACHE_SAVE_TOKEN: ${{ github.event_name == 'pull_request' && '' || secrets.BORINGCACHE_SAVE_TOKEN }}
 
 ```
 
-Caches are restored at job start and saved at job end, with content-addressed deduplication and verified restores.
+`boringcache/one` handles CLI bootstrap, cache restore/save orchestration, and the common runtime presets. If you only need the CLI binary in a later step, use `setup: none`.
 
 ## CLI usage
 
@@ -86,25 +87,18 @@ The same CLI works in CI, Docker, and on developer machines:
 boringcache save my-org/app "deps:node_modules,build:dist"
 boringcache restore my-org/app "deps:node_modules,build:dist"
 ```
-You can use the CLI directly or via GitHub Actions wrappers.
+You can use the CLI directly or via `boringcache/one`.
 
 ## Repositories
-### Core
+### Maintained
 
 - cli – BoringCache CLI (save/restore directories anywhere)
-- action – GitHub Actions cache (drop-in for actions/cache)
-- save / restore – Explicit save and restore actions
-- setup-boringcache – Install the CLI in GitHub Actions
+- one – Unified GitHub Actions surface for setup, restore/save, and proxy-backed modes
+- action-core – Shared implementation package used by maintained actions
 
-### Language & tooling actions
+### Legacy compatibility repos
 
-- nodejs-action – Node.js toolchain + dependency caching
-- ruby-action – Ruby toolchain + bundle caching
-- rust-action – Rust toolchain + Cargo caching
-- docker-action – Docker / BuildKit cache integration
-- buildkit-action – BuildKit daemon with shared caching
-
-All actions use the same cache format and underlying CLI.
+Older wrapper actions are being retired. New workflows should use `boringcache/one@v1`.
 
 ## Where it works
 - GitHub Actions
@@ -125,15 +119,24 @@ Any CI. Any build system. Just point at directories.
 
 BoringCache only saves and restores directories you explicitly choose.
 
+---
+
+## Get Started
+
+Accelerate your Docker image builds and GitHub Actions workflows. Easily integrate with your existing CI provider and dev workflows to save hours of build time.
+
+**Free tier available. No credit card required.**
+
+[**→ Get started free**](https://boringcache.com/signup) · [Read the docs](https://boringcache.com/docs) · [hello@boringcache.com](mailto:hello@boringcache.com)
+
+---
+
 ## Documentation
 
 - 📖 Docs: https://boringcache.com/docs
 - 🌐 Website: https://boringcache.com
-
-🧠 GitHub Actions Marketplace: https://github.com/marketplace/actions/boringcache
+- 🛒 GitHub Actions Marketplace: https://github.com/marketplace/actions/boringcache
 
 ## License
 
-MIT
-
-Built by BoringTech Ltd.
+MIT · Built by BoringTech Ltd.
