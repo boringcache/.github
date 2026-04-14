@@ -18,10 +18,10 @@ boringcache onboard
 # Archive mode (run/save/restore)
 boringcache run -- bundle install
 
-# Adapter command from repo config
-boringcache nx
+# Docker adapter from repo config
+boringcache docker
 
-# One-off adapter command
+# Same adapter without repo config
 boringcache docker --tag docker-cache -- docker buildx build .
 
 # Long-lived local proxy
