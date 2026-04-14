@@ -1,19 +1,23 @@
-# BoringCache – Vision
+# BoringCache Vision
 
-BoringCache exists to reduce wasted work in software builds.
+Builds should not repeat work that is already done.
 
-Modern builds repeatedly reinstall dependencies, rebuild binaries, and re-download artifacts across CI runs, machines, and environments—even when nothing meaningful has changed.
+Across CI, Docker builds, and local development, teams keep reinstalling dependencies, rebuilding outputs, and recreating tool state that already exists somewhere else.
 
-The core belief is simple:
+BoringCache is a shared build cache for that problem.
 
-> If something was already built, installed, or downloaded, it should be reused.
+It is not:
 
-BoringCache is not a build system.
-It is not a workflow engine.
-It does not try to be clever.
+- a build system
+- a CI provider
+- a workflow engine
+- a remote builder
 
-It provides a universal cache layer that lets developers reuse expensive parts of their build—dependencies, toolchains, and build outputs—across CI, Docker, and local machines.
+It keeps reusable build state available where builds already happen.
 
-Speed comes from reuse.
-Clarity comes from explicit control.
-Trust comes from verification.
+The bar for the product is straightforward:
+
+- clear category
+- explicit behavior
+- grounded claims
+- useful reuse across environments

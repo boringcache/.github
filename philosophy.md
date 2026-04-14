@@ -1,41 +1,46 @@
-# BoringCache – Philosophy
+# BoringCache Philosophy
+
+BoringCache is a shared build cache. The job is to reuse build state across CI, Docker builds, and local development without hiding how it works.
 
 ## Cache parts, not systems
 
-BoringCache caches directories, not build graphs or workflows.
-Users explicitly choose what to cache.
+BoringCache caches directories and native remote-cache flows. It does not model the whole build system for the user.
 
-If something requires guessing user intent, it does not belong.
+If something depends on guessing intent, it does not belong in the default path.
 
 ## Portability over cleverness
 
-A cache is only valuable if it can be reused.
-Portability across CI, Docker, and local environments is more important than optimizing for one platform.
+A cache is only useful if it can be reused where builds actually run.
 
-Defaults must be safe.
-Advanced behavior must be opt-in.
+That means:
+
+- CI
+- Docker builds
+- local development
+
+Defaults should stay safe. Advanced behavior should stay explicit.
 
 ## Determinism over heuristics
 
-Reuse is driven by content fingerprints and manifests.
+Reuse should come from content, manifests, and explicit cache boundaries.
+
 If content matches, reuse is safe.
 If it does not, rebuild.
 
-No heuristics.
 No hidden invalidation rules.
+No guesswork.
 
 ## Boring by design
 
 Avoid:
+
 - background daemons
 - opaque formats
-- magic behavior
 - platform lock-in
+- magic behavior
 
-BoringCache should be easy to reason about and easy to replace.
+The system should be easy to reason about and easy to replace.
 
-## Security is baseline
+## Trust is part of the product
 
-Integrity verification is always on.
-Encryption is opt-in.
-Workspace scoping prevents cache poisoning.
+Verified restores, workspace scoping, and clear read/write boundaries are part of making shared cache usable in practice.
