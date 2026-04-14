@@ -15,7 +15,7 @@ boringcache onboard
 ## Common paths
 
 ```bash
-# Archive mode
+# Archive mode (run/save/restore)
 boringcache run -- bundle install
 
 # Adapter command from repo config
@@ -28,7 +28,7 @@ boringcache docker --tag docker-cache -- docker buildx build .
 boringcache cache-registry my-org/app registry-cache --port 5000
 ```
 
-Archive mode is for explicit directory caches. Adapter commands and `cache-registry` are for tools that already support a native remote cache or registry flow.
+Archive mode commands (`run`, `save`, and `restore`) are for explicit directory caches. Adapter commands are for supported remote-cache tools. Use `cache-registry` when the repo already has a checked-in local endpoint setup or another process should keep the proxy alive.
 
 ## GitHub Actions
 
