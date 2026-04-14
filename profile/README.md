@@ -2,7 +2,9 @@
 
 BoringCache is a shared build cache for CI, Docker builds, and local development.
 
-Start locally:
+Builds should not repeat work that is already done. Keep your current runners and pipelines. Add one shared cache layer.
+
+## Start here
 
 ```bash
 curl -sSL https://install.boringcache.com/install.sh | sh
@@ -10,27 +12,47 @@ cd your-project
 boringcache onboard
 ```
 
-That gives the repo a workspace, auth, and `.boringcache.toml` when the CLI can infer it.
+## Common paths
 
-Then use [`boringcache/one@v1`](https://github.com/boringcache/one) in GitHub Actions so local runs, Docker builds, and CI share the same repo config.
+```bash
+# Archive mode
+boringcache run -- bundle install
 
-Use:
+# Adapter command from repo config
+boringcache nx
 
-- `boringcache run` for archive caching
-- adapter commands like `boringcache nx` or `boringcache docker` when the tool already supports remote cache
-- `run --proxy` for unsupported or custom tools
+# One-off adapter command
+boringcache docker --tag docker-cache -- docker buildx build .
 
-Repos:
+# Long-lived local proxy
+boringcache cache-registry my-org/app registry-cache --port 5000
+```
 
-- [`cli`](https://github.com/boringcache/cli)
-- [`one`](https://github.com/boringcache/one)
-- [`web`](https://github.com/boringcache/web)
-- [`action-core`](https://github.com/boringcache/action-core)
-- [`benchmarks`](https://github.com/boringcache/benchmarks)
-- [`ruby`](https://github.com/boringcache/ruby)
+Archive mode is for explicit directory caches. Adapter commands and `cache-registry` are for tools that already support a native remote cache or registry flow.
 
-Links:
+## GitHub Actions
 
-- [Docs](https://boringcache.com/docs)
-- [Website](https://boringcache.com)
-- [GitHub Actions Marketplace](https://github.com/marketplace/actions/boringcache)
+```yaml
+- uses: boringcache/one@v1
+  with:
+    workspace: my-org/app
+    cache-profiles: bundle-install
+  env:
+    BORINGCACHE_RESTORE_TOKEN: ${{ secrets.BORINGCACHE_RESTORE_TOKEN }}
+    BORINGCACHE_SAVE_TOKEN: ${{ secrets.BORINGCACHE_SAVE_TOKEN }}
+```
+
+Pull requests can stay restore-only. Trusted jobs publish updates.
+
+## Repositories
+
+- `cli` - CLI, repo config, onboard flow, adapter commands
+- `web` - app, docs, billing, workspaces, tokens
+- `one` - main GitHub Action
+- `action-core` - shared action helpers
+- `ruby` - prebuilt Ruby distributions
+
+## Docs
+
+- https://boringcache.com
+- https://boringcache.com/docs

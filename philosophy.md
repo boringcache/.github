@@ -1,46 +1,39 @@
 # BoringCache Philosophy
 
-BoringCache is a shared build cache. The job is to reuse build state across CI, Docker builds, and local development without hiding how it works.
+## Cache repeated work, not workflows
 
-## Cache parts, not systems
+BoringCache keeps reusable build state available where builds already happen.
 
-BoringCache caches directories and native remote-cache flows. It does not model the whole build system for the user.
+It supports two paths:
+- explicit directory caching when archive mode is enough
+- native remote-cache and proxy flows when the tool already supports them
 
-If something depends on guessing intent, it does not belong in the default path.
+The product should stay explicit. Users choose the workspace, entries, tags, or adapter defaults.
 
-## Portability over cleverness
+## Keep the build where it already runs
 
-A cache is only useful if it can be reused where builds actually run.
+BoringCache is not a build system, a workflow engine, a CI provider, or a remote builder.
 
-That means:
-
-- CI
-- Docker builds
-- local development
-
-Defaults should stay safe. Advanced behavior should stay explicit.
+Keep the current runners, Dockerfiles, and developer machines. Add one shared cache layer.
 
 ## Determinism over heuristics
 
-Reuse should come from content, manifests, and explicit cache boundaries.
+Reuse follows content fingerprints, manifests, and verified restores.
 
-If content matches, reuse is safe.
+If content matches, reuse it.
 If it does not, rebuild.
 
 No hidden invalidation rules.
-No guesswork.
+No guesswork about what changed.
+
+## Trust boundaries matter
+
+Restore and save access are separate on purpose.
+
+Pull requests and other low-trust jobs can stay restore-only. Trusted jobs publish updates. Workspaces define the cache boundary.
 
 ## Boring by design
 
-Avoid:
+Avoid background daemons, invented platform language, opaque behavior, and hard lock-in.
 
-- background daemons
-- opaque formats
-- platform lock-in
-- magic behavior
-
-The system should be easy to reason about and easy to replace.
-
-## Trust is part of the product
-
-Verified restores, workspace scoping, and clear read/write boundaries are part of making shared cache usable in practice.
+BoringCache should stay easy to reason about, easy to inspect, and easy to remove.
