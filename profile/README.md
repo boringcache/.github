@@ -20,26 +20,38 @@ boringcache run -- bundle install
 
 # Docker adapter from repo config
 boringcache docker
-
-# Same adapter without repo config
-boringcache docker --tag docker-cache -- docker buildx build .
-
-# Long-lived local proxy
-boringcache cache-registry my-org/app registry-cache --port 5000
 ```
 
-Archive mode commands (`run`, `save`, and `restore`) are for explicit directory caches. Adapter commands are for supported remote-cache tools. Use `cache-registry` when the repo already has a checked-in local endpoint setup or another process should keep the proxy alive.
+Archive mode commands (`run`, `save`, and `restore`) are for explicit directory
+caches. Adapter commands are the normal path for supported remote-cache tools.
 
 ## GitHub Actions
 
+Commit cache identity in `.boringcache.toml`:
+
+```toml
+workspace = "my-org/app"
+
+[entries.bundler]
+path = "vendor/bundle"
+tag = "bundler-gems"
+
+[profiles.bundle-install]
+entries = ["bundler"]
+```
+
+Then keep the Action surface small:
+
 ```yaml
-- uses: boringcache/one@v1
+- uses: boringcache/one@9721d419d2c78c0780963d297eb3f81f24641a27 # v1.13.106
   with:
-    workspace: my-org/app
+    trust-policy: auto
+    setup: none
+    mode: archive
     cache-profiles: bundle-install
   env:
     BORINGCACHE_RESTORE_TOKEN: ${{ secrets.BORINGCACHE_RESTORE_TOKEN }}
-    BORINGCACHE_SAVE_TOKEN: ${{ secrets.BORINGCACHE_SAVE_TOKEN }}
+    BORINGCACHE_SAVE_TOKEN: ${{ github.event_name != 'pull_request' && secrets.BORINGCACHE_SAVE_TOKEN || '' }}
 ```
 
 Pull requests can stay restore-only. Trusted jobs publish updates.
@@ -47,9 +59,9 @@ Pull requests can stay restore-only. Trusted jobs publish updates.
 ## Repositories
 
 - `cli` - CLI, repo config, onboard flow, adapter commands
-- `web` - app, docs, billing, workspaces, tokens
-- `one` - main GitHub Action
-- `action-core` - shared action helpers
+- `one` - GitHub Action distribution
+- `buildkit` - managed BuildKit image metadata
+- `benchmarks` - public benchmark results and methodology
 - `ruby` - prebuilt Ruby distributions
 
 ## Docs
