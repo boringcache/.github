@@ -43,7 +43,7 @@ entries = ["bundler"]
 Then keep the Action surface small:
 
 ```yaml
-- uses: boringcache/one@9721d419d2c78c0780963d297eb3f81f24641a27 # v1.13.106
+- uses: boringcache/one@6b7033721b37075b2138fd0c769bf088e0836ce6 # v1.14.0
   with:
     trust-policy: auto
     setup: none
