@@ -5,6 +5,7 @@
 BoringCache keeps reusable build state available where builds already happen.
 
 It supports two paths:
+
 - explicit directory caching when archive mode is enough
 - native remote-cache and proxy flows when the tool already supports them
 
