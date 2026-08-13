@@ -1,10 +1,17 @@
 # BoringCache
 
-BoringCache is a shared build cache for CI, Docker builds, and local development.
+**Stop rebuilding. Start reusing.**
 
-Builds should not repeat work that is already done. Keep your current runners and pipelines. Add one shared cache layer.
+BoringCache keeps the work your last build finished available across CI,
+Docker builds, and local development. Keep your current runners, pipelines,
+and tools. Add one shared build cache.
 
-## Start here
+[Install the CLI](https://boringcache.com/docs/installation) ·
+[Watch the demo](https://boringcache.com/demo) ·
+[View benchmarks](https://boringcache.com/benchmarks) ·
+[See pricing](https://boringcache.com/pricing)
+
+## Start in your repo
 
 ```bash
 curl -sSL https://install.boringcache.com/install.sh | sh
@@ -12,59 +19,47 @@ cd your-project
 boringcache onboard
 ```
 
-## Common paths
+Onboard connects the workspace and writes `.boringcache.toml`. Commit that
+plan so local builds and trusted CI share the same cache decisions.
+
+Then use the shortest command for the tool:
 
 ```bash
-# Archive mode (run/save/restore)
+# Docker command from the repo plan
+boringcache docker
+
+# Explicit dependency or build directory
 boringcache run -- bundle install
 
-# Docker adapter from repo config
-boringcache docker
+# Native Xcode compilation cache
+boringcache xcode -- xcodebuild -workspace App.xcworkspace -scheme App build
 ```
 
-Archive mode commands (`run`, `save`, and `restore`) are for explicit directory
-caches. Adapter commands are the normal path for supported remote-cache tools.
+## One product, native cache paths
 
-## GitHub Actions
+- Docker BuildKit layers, persistent cache mounts, and compiler cache
+- Bazel, Gradle, Maven, Nx, Turborepo, Go, Cargo, ccache, sccache, Xcode, and Nix
+- Explicit directory cache through `run`, `save`, and `restore`
+- Restore-only access for pull requests; publication from trusted jobs
+- Cache sessions, hits, misses, storage, and token access you can inspect
 
-Commit cache identity in `.boringcache.toml`:
+## Results you can open
 
-```toml
-workspace = "my-org/app"
+- [2.8× faster in a Mastodon Docker run with every instruction rerun](https://github.com/boringcache/mastodon/actions/runs/31704136355)
+- [2.5× faster in the measured PostHog Docker build](https://github.com/boringcache/benchmark-posthog/actions/runs/31569900357)
+- [36% less runner time across 12 Immich base-image rebuilds](https://github.com/boringcache/base-images/actions/runs/31700820652)
+- [1,333 Cargo compiler-cache hits on Deno](https://github.com/boringcache/benchmark-deno/actions/runs/31538912668)
 
-[entries.bundler]
-path = "vendor/bundle"
-tag = "bundler-gems"
-
-[profiles.bundle-install]
-entries = ["bundler"]
-```
-
-Then keep the Action surface small:
-
-```yaml
-- uses: boringcache/one@6b7033721b37075b2138fd0c769bf088e0836ce6 # v1.14.0
-  with:
-    trust-policy: auto
-    setup: none
-    mode: archive
-    cache-profiles: bundle-install
-  env:
-    BORINGCACHE_RESTORE_TOKEN: ${{ secrets.BORINGCACHE_RESTORE_TOKEN }}
-    BORINGCACHE_SAVE_TOKEN: ${{ github.event_name != 'pull_request' && secrets.BORINGCACHE_SAVE_TOKEN || '' }}
-```
-
-Pull requests can stay restore-only. Trusted jobs publish updates.
+Results vary by workload. The [benchmark page](https://boringcache.com/benchmarks)
+keeps the measured values beside the exact public runs.
 
 ## Repositories
 
-- `cli` - CLI, repo config, onboard flow, adapter commands
-- `one` - GitHub Action distribution
-- `buildkit` - managed BuildKit image metadata
-- `benchmarks` - public benchmark results and methodology
-- `ruby` - prebuilt Ruby distributions
+- [`cli`](https://github.com/boringcache/cli) — CLI, onboard flow, repo plan, and tool adapters
+- [`one`](https://github.com/boringcache/one) — GitHub Action for the same repo plan
+- [`buildkit`](https://github.com/boringcache/buildkit) — signed managed BuildKit image
+- [`benchmarks`](https://github.com/boringcache/benchmarks) — public benchmark index and checks
+- [`ruby`](https://github.com/boringcache/ruby) — prebuilt Ruby distributions
 
-## Docs
-
-- https://boringcache.com
-- https://boringcache.com/docs
+[Read the docs](https://boringcache.com/docs) ·
+[Visit boringcache.com](https://boringcache.com)
