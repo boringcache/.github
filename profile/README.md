@@ -2,9 +2,9 @@
 
 **Stop rebuilding. Start reusing.**
 
-BoringCache keeps the work your last build finished available across CI,
-Docker builds, and local development. Keep your current runners, pipelines,
-and tools. Add one shared build cache.
+BoringCache keeps build data available across CI, Docker builds, and local
+development. Keep your current runners, pipelines, and tools. Add shared Cache,
+durable Artifacts, and a private OCI Registry in one workspace.
 
 [Install the CLI](https://boringcache.com/docs/installation) ·
 [Watch the demo](https://boringcache.com/demo) ·
@@ -35,7 +35,15 @@ boringcache run -- bundle install
 boringcache xcode -- xcodebuild -workspace App.xcworkspace -scheme App build
 ```
 
-## One product, native cache paths
+## Three products, one workspace
+
+- **Cache** reuses build state across machines and is reclaimable under the
+  workspace's cache policy.
+- **Artifacts** keep immutable build outputs for an explicit retention period.
+- **Registry** publishes private OCI images and other OCI content until it is
+  deleted.
+
+## Native cache paths
 
 - Docker BuildKit layers, persistent cache mounts, and compiler cache
 - Bazel, Gradle, Maven, Nx, Turborepo, Go, Cargo, ccache, sccache, Xcode, and Nix
@@ -62,4 +70,6 @@ keeps the measured values beside the exact public runs.
 - [`ruby`](https://github.com/boringcache/ruby) — prebuilt Ruby distributions
 
 [Read the docs](https://boringcache.com/docs) ·
+[Get support](mailto:support@boringcache.com) ·
+[Review security](https://boringcache.com/security) ·
 [Visit boringcache.com](https://boringcache.com)

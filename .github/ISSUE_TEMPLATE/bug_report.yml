@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible problem with a public BoringCache repository.
+title: ""
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. Do not include credentials, customer data, private repository content, or signed storage URLs. Report security vulnerabilities at https://boringcache.com/security.
+  - type: input
+    id: version
+    attributes:
+      label: BoringCache version
+      description: CLI version, immutable Action commit, or image tag and digest.
+      placeholder: v1.2.3
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, architecture, CI provider, and relevant tool versions.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: The smallest scrubbed command, workflow, or sequence that reproduces the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include reviewed logs or doctor output when useful.
+    validations:
+      required: true

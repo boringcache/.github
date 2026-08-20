@@ -1,0 +1,30 @@
+name: Feature request
+description: Propose a focused improvement to a public BoringCache surface.
+title: ""
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Describe the user job or failure mode before proposing an implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: current_path
+    attributes:
+      label: Current path
+      description: How is the job handled today, and where does that break down?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: Explain the behavior you would like, including compatibility or security constraints.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: Link public examples or provide measurements when they help explain the need.

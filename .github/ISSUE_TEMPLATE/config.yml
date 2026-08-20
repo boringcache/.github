@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: BoringCache support
+    url: https://boringcache.com/docs/troubleshooting
+    about: Troubleshoot product use or contact support for account and billing help.
+  - name: Security report
+    url: https://boringcache.com/security
+    about: Report a potential vulnerability privately.
+  - name: Documentation
+    url: https://boringcache.com/docs
+    about: Read setup, adapter, trust, and troubleshooting guidance.

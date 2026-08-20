@@ -1,15 +1,18 @@
 # BoringCache Philosophy
 
-## Cache repeated work, not workflows
+## Keep build data, not workflows
 
-BoringCache keeps reusable build state available where builds already happen.
+BoringCache keeps reusable build state, retained build outputs, and deployable
+images available where builds already happen.
 
 It supports two paths:
 
 - explicit directory caching when archive mode is enough
 - native remote-cache and proxy flows when the tool already supports them
 
-The product should stay explicit. Users choose the workspace, entries, tags, or adapter defaults.
+The product should stay explicit. Cache, Artifacts, and Registry keep different
+lifecycles inside one workspace instead of hiding every byte behind one generic
+storage model.
 
 ## Keep the build where it already runs
 
