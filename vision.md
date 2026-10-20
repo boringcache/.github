@@ -1,21 +1,19 @@
 # BoringCache Vision
 
-BoringCache exists because builds should not repeat work that is already done.
+BoringCache helps builds reuse work already completed on another machine.
 
-Modern builds keep recreating dependency installs, compiler outputs, tool caches, and build artifacts across CI, Docker builds, and local development even when that work already happened somewhere else.
+Builds repeatedly install dependencies and recreate compiler outputs, tool
+caches, and build artifacts across CI, Docker builds, and local development.
+Compatible builds can reuse those results.
 
-BoringCache is build data that follows your compute: reusable Cache, durable
-Artifacts, and a private OCI Registry in one workspace.
+BoringCache provides reusable Cache, retained Artifacts, and a private OCI
+Registry in one workspace. Builds continue to run on the customer's existing
+CI runners and developer machines.
 
-It does not replace CI. It does not replace Docker. It does not run builds somewhere else.
+The product's goals are:
 
-It keeps reusable build state, retained outputs, and deployable images available
-across the places builds already run.
-
-The goal is simple:
-
-- less repeated work
-- one workspace across environments
-- separate lifecycle rules for Cache, Artifacts, and Registry
-- restore-only access for low-trust jobs and save access for trusted jobs
-- explicit, verified reuse instead of opaque cache glue
+- reduce repeated downloads and compilation across compatible builds;
+- share build data across CI and local development;
+- give Cache, Artifacts, and Registry separate lifecycle rules;
+- allow restore-only access for low-trust jobs and save access for trusted jobs;
+- make cache decisions and transfer results inspectable.

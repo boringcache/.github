@@ -1,17 +1,17 @@
 # BoringCache
 
-**Stop rebuilding. Start reusing.**
+BoringCache provides shared build cache, retained artifacts, and a private OCI
+registry for CI, Docker builds, coding agents, and local development. Use your
+existing runners and build tools to reuse compatible build results across
+machines and keep the outputs you need to distribute.
 
-BoringCache keeps build data available across CI, Docker builds, and local
-development. Keep your current runners, pipelines, and tools. Add shared Cache,
-durable Artifacts, and a private OCI Registry in one workspace.
+| Product | What it does |
+|---|---|
+| [Cache](https://boringcache.com/build-cache) | Reuses dependency downloads, compiler results, task outputs, and Docker layers. Cache data is reclaimable under the workspace's cache policy. |
+| [Artifacts](https://boringcache.com/artifacts) | Keeps immutable build outputs for an explicit retention period. |
+| [Registry](https://boringcache.com/registry) | Publishes private OCI images and other OCI content until deleted. |
 
-[Install the CLI](https://boringcache.com/docs/installation) ·
-[Watch the demo](https://boringcache.com/demo) ·
-[View benchmarks](https://boringcache.com/benchmarks) ·
-[See pricing](https://boringcache.com/pricing)
-
-## Start in your repo
+## Install and connect a repository
 
 ```bash
 curl -sSL https://install.boringcache.com/install.sh | sh
@@ -19,57 +19,31 @@ cd your-project
 boringcache onboard
 ```
 
-Onboard connects the workspace and writes `.boringcache.toml`. Commit that
-plan so local builds and trusted CI share the same cache decisions.
+Onboarding connects a workspace and writes `.boringcache.toml`. Commit that plan
+so local builds and CI use the same configuration. Keep pull requests and other
+low-trust jobs restore-only; let trusted jobs publish cache updates.
 
-Then use the shortest command for the tool:
+[Installation guide](https://boringcache.com/docs/installation) ·
+[Supported tools and setup](https://boringcache.com/docs/adapters) ·
+[GitHub Actions guide](https://boringcache.com/docs/github-actions)
 
-```bash
-# Docker command from the repo plan
-boringcache docker
+## Build results
 
-# Explicit dependency or build directory
-boringcache run -- bundle install
-
-# Native Xcode compilation cache
-boringcache xcode -- xcodebuild -workspace App.xcworkspace -scheme App build
-```
-
-## Three products, one workspace
-
-- **Cache** reuses build state across machines and is reclaimable under the
-  workspace's cache policy.
-- **Artifacts** keep immutable build outputs for an explicit retention period.
-- **Registry** publishes private OCI images and other OCI content until it is
-  deleted.
-
-## Native cache paths
-
-- Docker BuildKit layers, persistent cache mounts, and compiler cache
-- Bazel, Gradle, Maven, Nx, Turborepo, Go, Cargo, ccache, sccache, Xcode, and Nix
-- Explicit directory cache through `run`, `save`, and `restore`
-- Restore-only access for pull requests; publication from trusted jobs
-- Cache sessions, hits, misses, storage, and token access you can inspect
-
-## Results you can open
-
-- [2.8× faster in a Mastodon Docker run with every instruction rerun](https://github.com/boringcache/mastodon/actions/runs/31704136355)
-- [2.5× faster in the measured PostHog Docker build](https://github.com/boringcache/benchmark-posthog/actions/runs/31569900357)
-- [36% less runner time across 12 Immich base-image rebuilds](https://github.com/boringcache/base-images/actions/runs/31700820652)
-- [1,333 Cargo compiler-cache hits on Deno](https://github.com/boringcache/benchmark-deno/actions/runs/31538912668)
-
-Results vary by workload. The [benchmark page](https://boringcache.com/benchmarks)
-keeps the measured values beside the exact public runs.
+The [benchmarks](https://boringcache.com/benchmarks) include measured workloads,
+comparison conditions, and links to the public runs. The
+[demo](https://boringcache.com/demo) shows recorded builds and workspace reports.
 
 ## Repositories
 
-- [`cli`](https://github.com/boringcache/cli) — CLI, onboard flow, repo plan, and tool adapters
-- [`one`](https://github.com/boringcache/one) — GitHub Action for the same repo plan
+- [`cli`](https://github.com/boringcache/cli) — CLI downloads and installation
+- [`one`](https://github.com/boringcache/one) — GitHub Action for cache and artifact transfers
 - [`buildkit`](https://github.com/boringcache/buildkit) — signed managed BuildKit image
 - [`benchmarks`](https://github.com/boringcache/benchmarks) — public benchmark index and checks
 - [`ruby`](https://github.com/boringcache/ruby) — prebuilt Ruby distributions
+- [`builder`](https://github.com/boringcache/builder) — application builds with Dagger, Rails, and Mise
 
-[Read the docs](https://boringcache.com/docs) ·
-[Get support](mailto:support@boringcache.com) ·
-[Review security](https://boringcache.com/security) ·
-[Visit boringcache.com](https://boringcache.com)
+[Documentation](https://boringcache.com/docs) ·
+[Pricing](https://boringcache.com/pricing) ·
+[Support](mailto:support@boringcache.com) ·
+[Security](https://boringcache.com/security) ·
+[boringcache.com](https://boringcache.com)
